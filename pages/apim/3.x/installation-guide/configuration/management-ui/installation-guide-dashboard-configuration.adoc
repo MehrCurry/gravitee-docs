@@ -15,7 +15,7 @@ You can create generic dashboards for the whole APIM platform, or specific dashb
 * API dashboards are viewable with the *APIs* menu option, by selecting an API and clicking *Analytics*.
 * Application dashboards are viewable with the *Applications* menu option, by selecting an application and clicking *Analytics*.
 
-You can create multiple dashboards of each type with different configurations, and choose the order of priority in which they are displayed in the menu.
+You can create multiple dashboards of each type with different configurations, and choose the order in which they are displayed in the menu.
 
 == Create or configure a dashboard
 
@@ -50,3 +50,52 @@ You can perform the following actions on any dashboard in the three dashboard li
 * Delete it with the delete icon image:icons/delete-icon.png[]
 * Disable or enable it by toggling the enabled image:icons/enabled-icon.png[] and disabled image:icons/disabled-icon.png[] icons
 * Move it up or down the list with the up image:icons/up-arrow-icon.png[] and down image:icons/down-arrow-icon.png[] arrows to change its order of priority in the menu
+
+== Home dashboard
+
+You can customize the Home dashboard by modifying `home.json`.
+
+This file is located in the `/dashboards` folder of the Management API distribution folder.
+
+To customize the Home dashboard you can either modify this file or specify a new folder in the `gravitee.yml` file:
+
+```yaml
+# Console dashboards
+console:
+  dashboards:
+    path: ${gravitee.home}/dashboards
+```
+
+By default, this configuration is commented out and the path is `${gravitee.home}/dashboards`
+
+Charts are generated with https://api.highcharts.com/highcharts/[Highcharts, window=\"_blank\"].
+
+You can use the Highchart documentation to define the `chart` section of the JSON objects.
+
+*Expected format*
+```json
+[
+  {
+    "row": 0,
+    "col": 0,
+    "sizeY": 1,
+    "sizeX": 1,
+    "title": "Number of APIs",
+    "chart": {
+      "type": "count",
+      "data": [
+        {
+          "key": "count",
+          "label": "total",
+          "color": "#42a5f5"
+        }
+      ],
+      "request": {
+        "type": "count",
+        "field": "api"
+      }
+    }
+  },
+  ...
+]
+```
